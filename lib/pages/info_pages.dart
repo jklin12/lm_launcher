@@ -127,6 +127,7 @@ class _InfoPageState extends State<InfoPage> {
             Align(
               alignment: Alignment.center,
               child: Container(
+                margin: const EdgeInsets.only(top: 8.0),
                 width: MediaQuery.of(context).size.width / 1.2,
                 height: MediaQuery.of(context).size.width / 3,
                 color: const Color.fromRGBO(255, 255, 255, 0.8),
@@ -334,18 +335,24 @@ class _InfoPageState extends State<InfoPage> {
       color: Colors.white,
       child: Column(
         children: [
-          _tile('About Us', tab == 0 ? Colors.blue : Colors.white, 0),
-          _tile('Manager Greeting', tab == 1 ? Colors.blue : Colors.white, 1),
-          _tile('Fasilities', tab == 2 ? Colors.blue : Colors.white, 2),
-          _tile('Meeteng & Event', tab == 3 ? Colors.blue : Colors.white, 3),
-          _tile('Atraction', tab == 4 ? Colors.blue : Colors.white, 4),
-          _tile('Trsnportasion', tab == 5 ? Colors.blue : Colors.white, 5),
+          _tile('About Us', tab == 0 ? Colors.blue : Colors.white, 0,
+              "assets/images/info2.png"),
+          _tile('Manager Greeting', tab == 1 ? Colors.blue : Colors.white, 1,
+              "assets/images/manager.png"),
+          _tile('Fasilities', tab == 2 ? Colors.blue : Colors.white, 2,
+              "assets/images/facilities.png"),
+          _tile('Meeteng & Event', tab == 3 ? Colors.blue : Colors.white, 3,
+              "assets/images/meeteng.png"),
+          _tile('Atraction', tab == 4 ? Colors.blue : Colors.white, 4,
+              "assets/images/atraction.png"),
+          _tile('Trsnportasion', tab == 5 ? Colors.blue : Colors.white, 5,
+              "assets/images/transportation.png"),
         ],
       ),
     );
   }
 
-  Widget _tile(String label, Color color, int tabx) {
+  Widget _tile(String label, Color color, int tabx, String img) {
     return Container(
       height: 40,
       color: color,
@@ -360,8 +367,19 @@ class _InfoPageState extends State<InfoPage> {
                 tab = tabx;
               });
             },
-            child: Text(
-              label,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(image: AssetImage(img))),
+                ),
+                Text(
+                  label,
+                ),
+              ],
             ),
           ),
         ),
