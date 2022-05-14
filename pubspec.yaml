@@ -93,26 +93,25 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
 
   assets:
-    - assets/images/bg.jpg 
-    - assets/images/youtube.png 
-    - assets/images/tv.png 
-    - assets/images/radio.png 
-    - assets/images/netflix.png 
-    - assets/images/info.png 
-    - assets/images/logo.png
-    - assets/images/logo2.png
-    - assets/images/spotify.png 
-    - assets/images/yt_kids.png 
+    - assets/images/bg.jpg
+    - assets/images/Putih-08.png
+    - assets/images/Putih-09.png
+    - assets/images/Putih-10.png
+    - assets/images/Putih-11.png
+    - assets/images/Putih-12.png
+    - assets/images/Putih-13.png
+    - assets/images/Putih-14.png  
+    - assets/images/logo.png 
     - assets/images/hitam-01.png 
     - assets/images/hitam-02.png 
     - assets/images/hitam-03.png 
     - assets/images/hitam-04.png 
     - assets/images/hitam-05.png 
     - assets/images/hitam-06.png 
-    - assets/images/manager.png 
-    - assets/images/atraction.png 
-    - assets/images/facilities.png 
-    - assets/images/transportation.png 
-    - assets/images/info2.png 
-    - assets/images/meeteng.png 
+    - assets/images/Putih-01.png 
+    - assets/images/Putih-02.png 
+    - assets/images/Putih-03.png 
+    - assets/images/Putih-04.png 
+    - assets/images/Putih-05.png 
+    - assets/images/Putih-06.png 
  
