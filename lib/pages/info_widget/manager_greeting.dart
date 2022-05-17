@@ -12,14 +12,19 @@ class ManagerGreeting extends StatelessWidget {
         children: const [
           Text(
             "GREETING FROM US",
-            style: TextStyle(fontSize: 18.0, color: Colors.white),
+            style:      TextStyle(fontSize: 18.0, fontFamily: 'Roboto Condensed',color: Colors.white ),
+             
           ),
           SizedBox(height: 10.0),
           SizedBox(
-            width: 550,
+            width: 580,
             child: Text(
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-              style: TextStyle(color: Colors.white),
+              textAlign: TextAlign.justify,
+              style: TextStyle(
+                  fontSize: 15.0,
+                  fontFamily: 'Roboto Condensed',
+                  color: Colors.white),
             ),
           ),
         ],

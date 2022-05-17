@@ -4,21 +4,21 @@ import 'package:lm_launcher/model/atraction_model.dart';
 class Atraction extends StatelessWidget {
   final List<AtractionModel> atractionModel = [
     AtractionModel(
-        title: 'Tugu Yogyakarta',
+        title: 'JEMBATAN BARELANG',
         image:
-            "https://asset.kompas.com/crops/43BL_Jv4whTBdcNNbDwb7HFF_Fo=/0x0:1000x667/750x500/data/photo/2020/03/10/5e677a1b83e8d.jpg"),
+            "https://tempatwisata.b-cdn.net/wp-content/uploads/2021/08/Jembatan-Barelang-By-@rahmat5158.jpg"),
     AtractionModel(
-        title: 'Malioboro',
+        title: 'NAGOYA HILL',
         image:
-            "https://jogjarafira.com/wp-content/uploads/2019/03/Suasana-Malam-Jalan-Malioboro-Jogja-sumber-ig-wonderfuljogja.jpg"),
+            "https://media.suara.com/pictures/970x544/2021/06/08/99063-ilustrasi-nagoya-hill-batam.jpg"),
     AtractionModel(
-        title: '0KM Yogyakarta',
+        title: 'OCARINA BATAM',
         image:
-            "https://nalarpolitik.com/wp-content/uploads/2018/06/Nuansa-Eropa-di-Nol-Kilometer-Yogyakarta.jpg"),
+            "https://www.pantainesia.com/wp-content/uploads/2020/04/Pantai-Ocarina-Batam.jpg"),
     AtractionModel(
-        title: 'Pantai Parangtritis',
+        title: 'SOUTHLINK COUNTRY CLUB',
         image:
-            "https://1.bp.blogspot.com/-ib311gV-P0s/XR5OHBnL_kI/AAAAAAAABJ0/p1ivrgbsIlIZJmeOJmgFhQg4FQTjQyzMQCLcBGAs/s640/Keindahan-Pantai-Parangtritis-Yogyakarta.jpg"),
+            "https://i0.wp.com/batamekbiz.com/wp-content/uploads/2020/11/Southlinks-Country-Club-Batam.png?fit=700%2C390&ssl=1"),
   ];
 
   Atraction({Key? key}) : super(key: key);
@@ -33,8 +33,8 @@ class Atraction extends StatelessWidget {
         child: GridView.builder(
             shrinkWrap: true,
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 120,
-                childAspectRatio: 1.01,
+                maxCrossAxisExtent: 125,
+                childAspectRatio: 0.9,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10),
             itemCount: atractionModel.length,
