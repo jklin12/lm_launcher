@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lm_launcher/pages/home_page.dart';
+import 'package:lm_launcher/pages/home_page_new.dart';
 import 'package:lm_launcher/pages/info_pages.dart';
 import 'package:lm_launcher/pages/tv_pages.dart';
 
@@ -19,7 +20,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         textTheme: const TextTheme(
-          headline1: TextStyle(fontSize: 20.0, fontFamily: 'Roboto Condensed',fontWeight: FontWeight.w700), 
+          headline1: TextStyle(
+              fontSize: 20.0,
+              fontFamily: 'Roboto Condensed',
+              fontWeight: FontWeight.w700),
           bodyText1: TextStyle(fontSize: 15.0, fontFamily: 'Roboto Condensed'),
         ),
       ),
@@ -28,7 +32,7 @@ class MyApp extends StatelessWidget {
         InfoPage.routeName: (context) => const InfoPage(),
         '/tv': (context) => const TvPages()
       },
-      home: const HomePage(),
+      home: const HomePageNew(),
     );
   }
 }
