@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lm_launcher/model/atraction_model.dart';
@@ -17,6 +19,8 @@ class InfoPage extends StatefulWidget {
 }
 
 class _InfoPageState extends State<InfoPage> {
+
+   String? timeString;
   int? tab;
   int? menundex;
   FocusNode focusNode1 = FocusNode();
@@ -25,18 +29,30 @@ class _InfoPageState extends State<InfoPage> {
   FocusNode focusNode4 = FocusNode();
   FocusNode focusNode5 = FocusNode();
   FocusNode focusNode6 = FocusNode();
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    getTime();
+     timeString = _formatDateTime(DateTime.now());
+    Timer.periodic(const Duration(seconds: 1), (Timer t) => getTime()); 
+  }
+  
+ void getTime() {
+    final DateTime now = DateTime.now();
+    final String formattedDateTime = _formatDateTime(now);
+    setState(() {
+      timeString = formattedDateTime;
+    });
   }
 
+  String _formatDateTime(DateTime dateTime) {
+    return DateFormat('EEE d MMM kk:mm:ss').format(dateTime);
+  }
   @override
   Widget build(BuildContext context) {
-    DateTime now = DateTime.now();
-    String formattedDate = DateFormat('EEE d MMM kk:mm').format(now);
-    final args = ModalRoute.of(context)!.settings.arguments as InfoArguments;
-
+     final args = ModalRoute.of(context)!.settings.arguments as InfoArguments;
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -68,7 +84,7 @@ class _InfoPageState extends State<InfoPage> {
                             height: 25,
                           ),
                           Text(
-                            formattedDate,
+                            timeString!,
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                                 fontSize: 18.0,

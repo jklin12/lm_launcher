@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:external_app_launcher/external_app_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,6 +19,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String? _deviceId;
+  String? timeString;
   bool? isHover = false;
   int? menuIndex = 0;
 
@@ -40,7 +43,7 @@ class _HomePageState extends State<HomePage> {
     MenuModel(
         title: 'Youtube Kids',
         image: "assets/images/Putih-13.png",
-        url: "",
+        url: "com.google.android.youtube.tvkids",
         node: FocusNode()),
     MenuModel(
         title: 'Netflix',
@@ -50,7 +53,7 @@ class _HomePageState extends State<HomePage> {
     MenuModel(
         title: 'Spotify',
         image: "assets/images/Putih-09.png",
-        url: "com.spotify.music",
+        url: "com.spotify.tv.android",
         node: FocusNode()),
     MenuModel(
         title: 'Info',
@@ -76,7 +79,7 @@ class _HomePageState extends State<HomePage> {
 
     setState(() {
       _deviceId = deviceId;
-      print("deviceId->$_deviceId");
+      //print("deviceId->$_deviceId");
     });
   }
 
@@ -85,21 +88,37 @@ class _HomePageState extends State<HomePage> {
     // TODO: implement initState
     super.initState();
     initPlatformState();
-    getApps();
+    //FocusScope.of(context).focusedChild;
+    //getApps();
+    timeString = _formatDateTime(DateTime.now());
+
+    Timer.periodic(const Duration(seconds: 1), (Timer t) => getTime());
   }
 
   getApps() async {
     // Returns a list of only those apps that have launch intent
-List<Application> apps = await DeviceApps.getInstalledApplications(onlyAppsWithLaunchIntent: true, includeSystemApps: true);
+    List<Application> apps = await DeviceApps.getInstalledApplications(
+        onlyAppsWithLaunchIntent: true, includeSystemApps: true);
     for (var element in apps) {
       print(element.packageName);
     }
   }
 
+  void getTime() {
+    final DateTime now = DateTime.now();
+    //print(now);
+    final String formattedDateTime = _formatDateTime(now);
+    setState(() {
+      timeString = formattedDateTime;
+    });
+  }
+
+  String _formatDateTime(DateTime dateTime) {
+    return DateFormat('EEE d MMM kk:mm:ss').format(dateTime);
+  }
+
   @override
   Widget build(BuildContext context) {
-    DateTime now = DateTime.now();
-    String formattedDate = DateFormat('EEE d MMM kk:mm').format(now);
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -126,11 +145,17 @@ List<Application> apps = await DeviceApps.getInstalledApplications(onlyAppsWithL
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Image.asset("assets/images/logo.png",height: 25,),
+                          Image.asset(
+                            "assets/images/logo.png",
+                            height: 25,
+                          ),
                           Text(
-                            formattedDate,
+                            timeString!,
                             textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 18.0, fontFamily: 'Roboto Condensed',color: Colors.white),
+                            style: const TextStyle(
+                                fontSize: 18.0,
+                                fontFamily: 'Roboto Condensed',
+                                color: Colors.white),
                           )
                         ],
                       ),
@@ -145,16 +170,18 @@ List<Application> apps = await DeviceApps.getInstalledApplications(onlyAppsWithL
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
-                            "Welcome Room 132",
-                            textAlign: TextAlign.center,
-                            style:   TextStyle(fontSize: 18.0, fontFamily: 'Roboto Condensed',color: Colors.white)
-                          ),
-                          Text(
-                            "TV ID : " + (_deviceId ?? '').toUpperCase(),
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(fontSize: 18.0, fontFamily: 'Roboto Condensed',color: Colors.white)
-                          )
+                          const Text("Welcome Room 132",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 18.0,
+                                  fontFamily: 'Roboto Condensed',
+                                  color: Colors.white)),
+                          Text("TV ID : " + (_deviceId ?? '').toUpperCase(),
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                  fontSize: 18.0,
+                                  fontFamily: 'Roboto Condensed',
+                                  color: Colors.white))
                         ],
                       ),
                     )
@@ -180,7 +207,11 @@ List<Application> apps = await DeviceApps.getInstalledApplications(onlyAppsWithL
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: RawKeyboardListener(
                           onKey: ((RawKeyEvent event) async {
-                            if (event.isKeyPressed(LogicalKeyboardKey.select)) { 
+                            //print(event.runtimeType);
+                             if (event.runtimeType.toString() == 'RawKeyUpEvent' || event.runtimeType.toString() == 'RawKeyDownEvent') {
+                             //return null;
+                            }
+                            if (event.isKeyPressed(LogicalKeyboardKey.select)) {
                               if (menuModel[menuIndex ?? 0].type != null &&
                                   menuModel[menuIndex ?? 0].type == 'inApp') {
                                 Navigator.pushNamed(
@@ -194,8 +225,9 @@ List<Application> apps = await DeviceApps.getInstalledApplications(onlyAppsWithL
                                 }
                               }
                             }
+                           
                           }),
-                          focusNode: menuModel[index].node ?? FocusNode(),
+                          focusNode: FocusNode(),
                           child: Column(
                             children: [
                               TextButton(
@@ -244,10 +276,12 @@ List<Application> apps = await DeviceApps.getInstalledApplications(onlyAppsWithL
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 5.0),
                                 child: Text(
-                                  (menuModel[index].title!).toUpperCase(),
-                                  textAlign: TextAlign.center,
-                                  style: const  TextStyle(fontSize: 18.0, fontFamily: 'Roboto Condensed',color: Colors.white)
-                                ),
+                                    (menuModel[index].title!).toUpperCase(),
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                        fontSize: 18.0,
+                                        fontFamily: 'Roboto Condensed',
+                                        color: Colors.white)),
                               )
                             ],
                           ),
@@ -261,11 +295,10 @@ List<Application> apps = await DeviceApps.getInstalledApplications(onlyAppsWithL
                 ),
               ),
             ),
-               const Align(
+            const Align(
               alignment: Alignment.bottomCenter,
-              heightFactor: 31.5,
+              heightFactor: 31.6,
               child: Divider(
-                
                 color: Colors.blue,
                 thickness: 2.0,
               ),
