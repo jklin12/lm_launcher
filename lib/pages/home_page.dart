@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
   int? menuIndex = 0;
 
   List<MenuModel> menuModel = [
-    MenuModel(
+    /*  MenuModel(
         title: 'TV',
         image: "assets/images/Putih-12.png",
         url: "/tv",
@@ -60,7 +60,7 @@ class _HomePageState extends State<HomePage> {
         image: "assets/images/Putih-08.png",
         url: InfoPage.routeName,
         type: 'inApp',
-        node: FocusNode()),
+        node: FocusNode()),*/
   ];
 
   Future<void> initPlatformState() async {
@@ -208,8 +208,11 @@ class _HomePageState extends State<HomePage> {
                         child: RawKeyboardListener(
                           onKey: ((RawKeyEvent event) async {
                             //print(event.runtimeType);
-                             if (event.runtimeType.toString() == 'RawKeyUpEvent' || event.runtimeType.toString() == 'RawKeyDownEvent') {
-                             //return null;
+                            if (event.runtimeType.toString() ==
+                                    'RawKeyUpEvent' ||
+                                event.runtimeType.toString() ==
+                                    'RawKeyDownEvent') {
+                              //return null;
                             }
                             if (event.isKeyPressed(LogicalKeyboardKey.select)) {
                               if (menuModel[menuIndex ?? 0].type != null &&
@@ -225,50 +228,40 @@ class _HomePageState extends State<HomePage> {
                                 }
                               }
                             }
-                           
                           }),
                           focusNode: FocusNode(),
                           child: Column(
                             children: [
                               TextButton(
-                                onPressed: () => false,
-                                style: ButtonStyle(
-                                  overlayColor:
-                                      MaterialStateProperty.resolveWith<Color?>(
-                                    (Set<MaterialState> states) {
-                                      if (states.contains(
-                                              MaterialState.focused) ||
-                                          states.contains(
-                                              MaterialState.pressed)) {
-                                        menuIndex = index;
-                                        return const Color(0XFF007BF9)
-                                            .withOpacity(0.8);
-                                      }
-                                      return null; // Defer to the widget's default.
-                                    },
-                                  ),
-                                  elevation: MaterialStateProperty.resolveWith<
-                                      double?>((Set<MaterialState> states) {
-                                    return 50;
-                                  }),
-                                  padding: MaterialStateProperty.resolveWith<
-                                          EdgeInsetsGeometry?>(
+                                  onPressed: () => false,
+                                  style: ButtonStyle(
+                                    overlayColor: MaterialStateProperty
+                                        .resolveWith<Color?>(
                                       (Set<MaterialState> states) {
-                                    return const EdgeInsets.symmetric(
-                                        horizontal: 15);
-                                  }),
-                                ),
-                                child: Container(
-                                  margin:
-                                      const EdgeInsets.symmetric(vertical: 8),
-                                  height: 50,
-                                  width: 70,
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              menuModel[index].image!))),
-                                ),
-                              ),
+                                        if (states.contains(
+                                                MaterialState.focused) ||
+                                            states.contains(
+                                                MaterialState.pressed)) {
+                                          menuIndex = index;
+                                          return const Color(0XFF007BF9)
+                                              .withOpacity(0.8);
+                                        }
+                                        return null; // Defer to the widget's default.
+                                      },
+                                    ),
+                                    elevation: MaterialStateProperty
+                                        .resolveWith<double?>(
+                                            (Set<MaterialState> states) {
+                                      return 50;
+                                    }),
+                                    padding: MaterialStateProperty.resolveWith<
+                                            EdgeInsetsGeometry?>(
+                                        (Set<MaterialState> states) {
+                                      return const EdgeInsets.symmetric(
+                                          horizontal: 15);
+                                    }),
+                                  ),
+                                  child: Icon(Icons.abc)),
                               const SizedBox(
                                 height: 3.0,
                               ),

@@ -47,6 +47,10 @@ dependencies:
   get_storage: ^2.0.3
   geolocator: ^7.7.0
   get: ^4.3.8
+  firebase_core: ^1.17.1
+  firebase_messaging: ^11.4.1
+  flutter_wallpaper_manager: ^0.0.3
+  flutter_cache_manager: ^3.3.0 
   
 dev_dependencies:
   flutter_test:
@@ -124,6 +128,13 @@ flutter:
     - assets/images/Putih-05.png 
     - assets/images/Putih-06.png 
     - assets/images/logo2.png 
+    - assets/svg/Putih-08.svg 
+    - assets/svg/Putih-11.svg
+    - assets/svg/Putih-12.svg
+    - assets/svg/Putih-13.svg
+    - assets/svg/Putih-14.svg
+    - assets/svg/1653460465icon-contact.svg 
+    - assets/radios-id.json 
 
   fonts:
     - family: Roboto Condensed

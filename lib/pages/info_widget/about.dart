@@ -6,6 +6,7 @@ class AboutUs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
           padding: const EdgeInsets.all(8.0),
@@ -14,14 +15,17 @@ class AboutUs extends StatelessWidget {
             children: const [
               Text(
                 "About Us",
-                style:   TextStyle(fontSize: 18.0, fontFamily: 'Roboto Condensed',color: Colors.white ),
+                style:
+                    TextStyle(fontSize: 18.0, fontFamily: 'Roboto Condensed'),
               ),
               SizedBox(height: 10.0),
               SizedBox(
                 width: 350,
                 child: Text(
                   "Aston Batam Hotel & Residence merupakan hotel baru di Batam dan hotel bintang empat yang terletak di pusat Batam, kota dimana bisnis dan hiburan menyatu dalam harmoni. Hotel ini terletak hanya 25 menit dari Bandara Hang Nadim dan hanya 8 menit dari Terminal Feri Harbour Bay, Pusat Perbelanjaan, Lapangan Golf menjadikannya salah satu pusat perdagangan paling strategis di Indonesia.",
-                  textAlign: TextAlign.justify,style:  TextStyle(fontSize: 15.0, fontFamily: 'Roboto Condensed',color: Colors.white),
+                  textAlign: TextAlign.justify,
+                  style:
+                      TextStyle(fontSize: 15.0, fontFamily: 'Roboto Condensed'),
                 ),
               ),
             ],
@@ -30,8 +34,8 @@ class AboutUs extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
-            width: 200.0,
-            height: 300.0,
+            width: 150.0,
+            height: 200.0,
             decoration: const BoxDecoration(
                 image: DecorationImage(
               image: NetworkImage(

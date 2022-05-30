@@ -3,6 +3,8 @@ import 'package:lm_launcher/service/Logger.dart';
 import 'package:lm_launcher/service/local_storage.dart';
 
 class BaseService {
+  final String? baseUrl;
+  BaseService({this.baseUrl});
   final Dio _dio = Dio(BaseOptions(
       baseUrl: "https://samples.openweathermap.org",
       validateStatus: (status) {

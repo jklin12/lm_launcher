@@ -7,5 +7,5 @@ class MenuModel {
   final String? type;
   final FocusNode? node;
 
-  MenuModel({this.title, this.image, this.url, this.type,this.node});
+  MenuModel({this.title, this.image, this.url, this.type, this.node});
 }
