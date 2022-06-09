@@ -5,15 +5,12 @@ import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:flutter_wallpaper_manager/flutter_wallpaper_manager.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:lm_launcher/model/home_model.dart';
-import 'package:lm_launcher/model/menu_model.dart';
 import 'package:lm_launcher/model/menu_model2.dart';
 import 'package:lm_launcher/model/weather_model.dart';
-import 'package:lm_launcher/pages/info_pages.dart';
+import 'package:lm_launcher/pages/utils/color_loader.dart';
 import 'package:lm_launcher/pages/utils/weather_status.dart';
 import 'package:lm_launcher/pages/widget/custom_button.dart';
 import 'package:lm_launcher/service/home_controller.dart';
@@ -38,6 +35,9 @@ class _HomePageNewState extends State<HomePageNew> {
   String? image;
   String? tvRoom;
   String? tvId;
+  String? weatherTemp;
+  String? weatherStatusx;
+  int? weatherIcon;
   bool isLoading = true;
   List<FocusNode> focusNodes = [];
   HomeModel? homeModel;
@@ -82,26 +82,41 @@ class _HomePageNewState extends State<HomePageNew> {
         node: FocusNode()),
   ];*/
 
+  String greetingMessage() {
+    var timeNow = DateTime.now().hour;
+
+    if (timeNow <= 12) {
+      return 'Good Morning';
+    } else if ((timeNow > 12) && (timeNow <= 16)) {
+      return 'Good Afternoon';
+    } else if ((timeNow > 16) && (timeNow < 20)) {
+      return 'Good Evening';
+    } else {
+      return 'Good Night';
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     initPlatformState();
     //openAlertBox();
-    setWallpaper();
+    //setWallpaper();
+    getTOken();
     timeString = _formatDateTime(DateTime.now());
     Timer.periodic(const Duration(seconds: 1), (Timer t) => getTime());
     FirebaseMessaging.instance
         .getInitialMessage()
         .then((RemoteMessage? message) {
       if (message != null) {
-        print("message ");
+        //print("message ");
       }
     });
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print('Got a message whilst in the foreground!');
-      print('Message data: ${message.data}');
+      //print('Got a message whilst in the foreground!');
+      //print('Message data: ${message.data}');
 
       if (message.notification != null) {
         openAlertBox(message.notification!.title ?? '', message.data['type'],
@@ -111,15 +126,15 @@ class _HomePageNewState extends State<HomePageNew> {
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print("object");
-      print('A new onMessageOpenedApp event was published! $message');
+      //print("object");
+      //print('A new onMessageOpenedApp event was published! $message');
     });
   }
 
   getTOken() async {
     String? token;
     token = await FirebaseMessaging.instance.getToken();
-    //print(token);
+    postTOken(tvId!, token!);
   }
 
   void getTime() {
@@ -152,7 +167,14 @@ class _HomePageNewState extends State<HomePageNew> {
       tvId = deviceId;
     });
     getHomeData(deviceId ?? '');
-    print("deviceId->$deviceId");
+    //print("deviceId->$deviceId");
+  }
+
+  postTOken(String tvId, String token) async {
+    var response = await Dio().post(
+      'http://202.169.224.46/lm_launcher/index.php/api/postTOken?tv_id=$tvId&token=$token',
+    );
+    print(response.data);
   }
 
   getHomeData(String tvId) async {
@@ -160,7 +182,6 @@ class _HomePageNewState extends State<HomePageNew> {
       'http://202.169.224.46/lm_launcher/index.php/api/home?tv_id=$tvId',
     );
     var datas = json.decode(response.data);
-    print(datas);
     if (datas['status'] == true) {
       setState(() {
         name = datas['data']['tv_name'];
@@ -176,12 +197,11 @@ class _HomePageNewState extends State<HomePageNew> {
         focusNodes[0].requestFocus();
 
         isLoading = false;
-        print(menuModel.length);
       });
     }
   }
 
-  Future<void> setWallpaper() async {
+  /*Future<void> setWallpaper() async {
     try {
       String url = "https://images.unsplash.com/photo-1542435503-956c469947f6";
       int location = WallpaperManager
@@ -191,18 +211,42 @@ class _HomePageNewState extends State<HomePageNew> {
           await WallpaperManager.setWallpaperFromFile(file.path, location);
       print("set walapaper $result");
     } on PlatformException {}
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
     // _focusNodes[0].requestFocus();
     return Scaffold(
       body: isLoading
-          ? const Center(child: CircularProgressIndicator())
+          ? Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/images/bg.jpg'),
+                  fit: BoxFit.cover,
+                ),
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Color.fromARGB(177, 0, 0, 0),
+                    Color.fromARGB(124, 31, 5, 5),
+                    Color(0x00000000),
+                    Color.fromARGB(164, 0, 0, 0),
+                  ],
+                ),
+              ),
+              child: const Center(
+                  child: ColorLoader5(
+                dotOneColor: Colors.pink,
+                dotTwoColor: Colors.amber,
+                dotThreeColor: Colors.deepOrange,
+                duration: Duration(seconds: 2),
+              )))
           : Container(
               decoration: BoxDecoration(
                   image: DecorationImage(
-                image: NetworkImage("http://202.169.224.46/lm_launcher/$image"),
+                image:
+                    NetworkImage("http://202.169.224.46/lm_launcher/$image"),
                 fit: BoxFit.cover,
               )),
               child: Container(
@@ -211,8 +255,8 @@ class _HomePageNewState extends State<HomePageNew> {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      Color.fromARGB(164, 0, 0, 0),
-                      Color.fromARGB(0, 216, 16, 16),
+                      Color.fromARGB(177, 0, 0, 0),
+                      Color.fromARGB(124, 31, 5, 5),
                       Color(0x00000000),
                       Color.fromARGB(164, 0, 0, 0),
                     ],
@@ -220,7 +264,7 @@ class _HomePageNewState extends State<HomePageNew> {
                 ),
                 child: Stack(
                   children: [
-                    /*Padding(
+                    Padding(
                       padding: const EdgeInsets.only(top: 10.0, left: 10.0),
                       child: Align(
                         alignment: Alignment.topLeft,
@@ -229,11 +273,13 @@ class _HomePageNewState extends State<HomePageNew> {
                             builder: (context, snapshot) {
                               if (snapshot.hasData) {
                                 var data = snapshot.data;
-                                var weatherIcon =
-                                    weatherStatus.getWeatherIcon(data!.cod);
-
+                                weatherStatusx =
+                                    data!.weather![0].description;
+                                weatherIcon = data.cod;
+                                weatherTemp = data.main!.temp.toString();
                                 return Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Text(
                                       weatherStatus.getWeatherIcon(data.cod),
@@ -279,17 +325,22 @@ class _HomePageNewState extends State<HomePageNew> {
                                 );
                               }
                               return const Center(
-                                child: CircularProgressIndicator(),
+                                child: ColorLoader5(
+                                  dotOneColor: Colors.pink,
+                                  dotTwoColor: Colors.amber,
+                                  dotThreeColor: Colors.deepOrange,
+                                  duration: Duration(seconds: 2),
+                                ),
                               );
                             }),
                       ),
-                    ),*/
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
                       child: Align(
                         alignment: Alignment.topCenter,
                         child: Image.asset(
-                          "assets/images/logo2.png",
+                          "assets/images/logos.png",
                           height: 50,
                         ),
                       ),
@@ -301,7 +352,7 @@ class _HomePageNewState extends State<HomePageNew> {
                           child: RichText(
                             textAlign: TextAlign.end,
                             text: TextSpan(
-                              text: 'Welcome, ',
+                              text: greetingMessage() + ', ',
                               style: const TextStyle(
                                   fontSize: 15.0,
                                   fontFamily: 'Roboto Condensed',
@@ -342,11 +393,15 @@ class _HomePageNewState extends State<HomePageNew> {
                                   title: menuModel[index].menuTitle,
                                   image: 'http://202.169.224.46/lm_launcher' +
                                       menuModel[index].menuImage!,
-                                  image2: 'http://202.169.224.46/lm_launcher' +
-                                      menuModel[index].menuImage2!,
+                                  image2:
+                                      'http://202.169.224.46/lm_launcher' +
+                                          menuModel[index].menuImage2!,
                                   urlType: menuModel[index].menuType,
                                   url: menuModel[index].menuUrl,
                                   devideId: tvId,
+                                  weatherIcon: weatherIcon,
+                                  weatherStatus: weatherStatusx,
+                                  weatherTemp: weatherTemp,
                                 );
                               },
                               separatorBuilder: (context, index) =>

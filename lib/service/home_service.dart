@@ -8,7 +8,7 @@ class HomeService {
           data: {'tv_id': tvId});
       return response;
     } on DioError catch (e) {
-      throw e;
+      rethrow ;
     }
   }
 }

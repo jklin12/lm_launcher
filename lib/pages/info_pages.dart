@@ -2,12 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:lm_launcher/model/atraction_model.dart';
 import 'package:lm_launcher/pages/info_widget/about.dart';
 import 'package:lm_launcher/pages/info_widget/atraction.dart';
 import 'package:lm_launcher/pages/info_widget/facilities.dart';
 import 'package:lm_launcher/pages/info_widget/manager_greeting.dart';
-import 'package:lm_launcher/utils/InfoArguments.dart';
+import 'package:lm_launcher/utils/info_argument.dart';
 
 class InfoPage extends StatefulWidget {
   static const routeName = '/info';
@@ -33,19 +32,16 @@ class _InfoPageState extends State<InfoPage> {
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
-    getTime();
-     timeString = _formatDateTime(DateTime.now());
-    Timer.periodic(const Duration(seconds: 1), (Timer t) => getTime()); 
+    super.initState(); 
   }
   
- void getTime() {
+ /*void getTime() {
     final DateTime now = DateTime.now();
     final String formattedDateTime = _formatDateTime(now);
     setState(() {
       timeString = formattedDateTime;
     });
-  }
+  }*/
 
   String _formatDateTime(DateTime dateTime) {
     return DateFormat('EEE d MMM kk:mm:ss').format(dateTime);

@@ -1,7 +1,8 @@
 import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lm_launcher/utils/InfoArguments.dart';
+import 'package:lm_launcher/pages/radio_players.dart';
+import 'package:lm_launcher/pages/tv_pages.dart';
 
 class RadioCard extends StatefulWidget {
   final FocusNode? focusNode;
@@ -9,13 +10,15 @@ class RadioCard extends StatefulWidget {
   final String? title;
   final String? url;
   final String? devideId;
+  final String? type;
   const RadioCard(
       {Key? key,
       this.focusNode,
       this.image,
       this.title,
       this.url,
-      this.devideId})
+      this.devideId,
+      this.type})
       : super(key: key);
 
   @override
@@ -49,6 +52,22 @@ class _RadioCardState extends State<RadioCard> {
     if (event is RawKeyDownEvent) {
       print('Focus node ${node.debugLabel} got key event: ${event.logicalKey}');
       if (event.logicalKey == LogicalKeyboardKey.select) {
+        if (widget.type == 'tv') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const TvPages()),
+          );
+        } else {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => RadioPlayers(
+                      image: widget.image,
+                      title: widget.title,
+                      url: widget.url,
+                    )),
+          );
+        }
         return KeyEventResult.handled;
       }
     }
@@ -56,7 +75,7 @@ class _RadioCardState extends State<RadioCard> {
   }
 
   cekAppEstist(String packageName) async {
-    print(packageName);
+    //print(packageName);
     bool isexsit = await DeviceApps.isAppInstalled('com.frandroid.app');
     return isexsit;
   }
@@ -90,11 +109,31 @@ class _RadioCardState extends State<RadioCard> {
           }),
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.network(widget.image!, width: 100,
+            /*Image.network(widget.image!, width: 100,
                 errorBuilder: (context, error, stackTrace) {
               return const Text("data");
-            }),
+            }),*/
+            SizedBox(
+              width: 150,
+              height: 150,
+              child: Image.network(
+                widget.url!, // this image doesn't exist
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    color: Colors.amber,
+                    alignment: Alignment.center,
+                    child: const Text(
+                      'Whoops!',
+                      style: TextStyle(fontSize: 30),
+                    ),
+                  );
+                },
+              ),
+            ),
             const SizedBox(
               height: 3.0,
             ),
@@ -110,10 +149,9 @@ class _RadioCardState extends State<RadioCard> {
           ],
         ),
         onPressed: () {
-          print("create item");
+          //print("create item");
         },
       ),
     );
-    ;
   }
 }

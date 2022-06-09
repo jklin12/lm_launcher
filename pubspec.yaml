@@ -51,6 +51,9 @@ dependencies:
   firebase_messaging: ^11.4.1
   flutter_wallpaper_manager: ^0.0.3
   flutter_cache_manager: ^3.3.0 
+  radio_player: ^0.4.3
+  flutter_alarm_clock: ^0.0.2
+  
   
 dev_dependencies:
   flutter_test:
@@ -114,7 +117,6 @@ flutter:
     - assets/images/Putih-12.png
     - assets/images/Putih-13.png
     - assets/images/Putih-14.png  
-    - assets/images/logo.png 
     - assets/images/hitam-01.png 
     - assets/images/hitam-02.png 
     - assets/images/hitam-03.png 
@@ -126,14 +128,14 @@ flutter:
     - assets/images/Putih-03.png 
     - assets/images/Putih-04.png 
     - assets/images/Putih-05.png 
-    - assets/images/Putih-06.png 
-    - assets/images/logo2.png 
+    - assets/images/Putih-06.png
     - assets/svg/Putih-08.svg 
     - assets/svg/Putih-11.svg
     - assets/svg/Putih-12.svg
     - assets/svg/Putih-13.svg
     - assets/svg/Putih-14.svg
     - assets/svg/1653460465icon-contact.svg 
+    - assets/images/logos.png
     - assets/radios-id.json 
 
   fonts:

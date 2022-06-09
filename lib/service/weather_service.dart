@@ -8,9 +8,9 @@ class WeatherService {
   Future<Response> getWeather() async {
     try {
       Response response = await service.request(
-          "https://api.openweathermap.org/data/2.5/weather?lat=-7.797068&lon=110.370529&appid=$apiKey&units=metric",
+          "https://api.openweathermap.org/data/2.5/weather?lat=1.082828&lon=104.030457&appid=$apiKey&units=metric",
           method: "Get");
-      //rint("_++++++++++++++++++${response.statusCode}");
+      //print("https://api.openweathermap.org/data/2.5/weather?lat=1.1426613&lon=104.0184042&appid=$apiKey&units=metric");
       return response;
     } on DioError catch (e) {
       throw handleError(e);

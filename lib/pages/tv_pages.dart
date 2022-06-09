@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class TvPages extends StatefulWidget {
-  const TvPages({Key? key}) : super(key: key);
+  final String? url;
+  const TvPages({Key? key,this.url}) : super(key: key);
 
   @override
   State<TvPages> createState() => _TvPagesState();

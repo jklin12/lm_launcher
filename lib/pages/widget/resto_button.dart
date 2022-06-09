@@ -1,39 +1,27 @@
 import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_alarm_clock/flutter_alarm_clock.dart';
-import 'package:lm_launcher/utils/info_argument.dart';
 
-class CustomButton extends StatefulWidget {
+class RestoButton extends StatefulWidget {
   final FocusNode? focusNode;
   final String? image;
-  final String? image2;
+  final int? index;
   final String? title;
-  final String? urlType;
-  final String? url;
-  final String? devideId;
-  final String? weatherTemp;
-  final String? weatherStatus;
-  final int? weatherIcon;
-  const CustomButton(
+  final Function(int)? callBack;
+  const RestoButton(
       {Key? key,
-      this.image2,
       this.focusNode,
       this.image,
+      this.index,
       this.title,
-      this.url,
-      this.urlType,
-      this.devideId,
-      this.weatherIcon,
-      this.weatherStatus,
-      this.weatherTemp})
+      this.callBack})
       : super(key: key);
 
   @override
-  State<CustomButton> createState() => _CustomButtonState();
+  State<RestoButton> createState() => _RestoButtonState();
 }
 
-class _CustomButtonState extends State<CustomButton> {
+class _RestoButtonState extends State<RestoButton> {
   bool _focused = false;
   late FocusAttachment _nodeAttachment;
   Color _color = Colors.white;
@@ -47,7 +35,7 @@ class _CustomButtonState extends State<CustomButton> {
   }
 
   void _handleFocusChange() {
-    print(widget.focusNode?.hasFocus);
+    //print(widget.focusNode?.hasFocus);
     if (widget.focusNode?.hasFocus != _focused) {
       setState(() {
         _focused = widget.focusNode!.hasFocus;
@@ -58,28 +46,21 @@ class _CustomButtonState extends State<CustomButton> {
 
   KeyEventResult _handleKeyPress(FocusNode node, RawKeyEvent event) {
     if (event is RawKeyDownEvent) {
-      print('Focus node ${node.debugLabel} got key event: ${event.logicalKey}');
+      widget.callBack;
+      print('key event: ${event.logicalKey}');
       if (event.logicalKey == LogicalKeyboardKey.select) {
-        if (widget.urlType == 'inApp') {
-          if (widget.url == '/alarm') {
-            //FlutterAlarmClock.showAlarms();
-            //FlutterAlarmClock.createAlarm(17, 7);
-          } else {
-            Navigator.pushNamed(context, widget.url ?? '',
-                arguments: InfoArguments(widget.devideId!, widget.weatherIcon!,
-                    widget.weatherStatus!, widget.weatherTemp!));
-          }
-        } else {
-          DeviceApps.openApp(widget.url ?? '');
-        } 
-        return KeyEventResult.handled;
-      } 
+        if (event.logicalKey == LogicalKeyboardKey.select) {
+          widget.callBack?.call(widget.index!);
+          //widget.focusNode!.unfocus();
+          return KeyEventResult.handled;
+        }
+      }  
     }
     return KeyEventResult.ignored;
   }
 
   cekAppEstist(String packageName) async {
-    print(packageName);
+    //print(packageName);
     bool isexsit = await DeviceApps.isAppInstalled('com.frandroid.app');
     return isexsit;
   }
@@ -100,15 +81,11 @@ class _CustomButtonState extends State<CustomButton> {
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.resolveWith<Color?>(
               (Set<MaterialState> states) {
-            return Color(_focused ? 0XFFF00215B : 0XFFFFFFFF);
+            return Color(_focused ? 0XFFAB8C56 : 0XFFFFFFFF);
           }),
           elevation: MaterialStateProperty.resolveWith<double?>(
               (Set<MaterialState> states) {
             return 0;
-          }),
-          overlayColor: MaterialStateProperty.resolveWith<Color?>(
-              (Set<MaterialState> states) {
-            return Color(_focused ? 0XFFF00215B : 0XFFFFFFFF);
           }),
           padding: MaterialStateProperty.resolveWith<EdgeInsetsGeometry?>(
               (Set<MaterialState> states) {
@@ -118,8 +95,9 @@ class _CustomButtonState extends State<CustomButton> {
         ),
         child: Row(
           children: [
-            Image.network(_focused ? widget.image! : widget.image2!,
-                height: 30),
+            widget.image != null
+                ? Image.network(widget.image!, height: 30)
+                : Container(),
             const SizedBox(
               height: 3.0,
             ),
@@ -135,10 +113,9 @@ class _CustomButtonState extends State<CustomButton> {
           ],
         ),
         onPressed: () {
-          print("create item");
+          //print("create item");
         },
       ),
     );
-    ;
   }
 }

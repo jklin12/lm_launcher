@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:lm_launcher/model/atraction_model.dart';
+import 'package:lm_launcher/model/facilites_model.dart';
+import 'package:lm_launcher/pages/info_widget/detail_facilities.dart';
+import 'package:lm_launcher/pages/widget/atraction_card.dart';
 
 class Atraction extends StatelessWidget {
+  final List<FacilitesModel>? atractionModel2;
   final List<AtractionModel> atractionModel = [
     AtractionModel(
         title: 'JEMBATAN BARELANG',
@@ -21,77 +25,40 @@ class Atraction extends StatelessWidget {
             "https://i0.wp.com/batamekbiz.com/wp-content/uploads/2020/11/Southlinks-Country-Club-Batam.png?fit=700%2C390&ssl=1"),
   ];
 
-  Atraction({Key? key}) : super(key: key);
+  Atraction({Key? key, this.atractionModel2}) : super(key: key);
+  int selected = 0;
+  bool isSelect = false;
 
   @override
   Widget build(BuildContext context) {
+    List<FocusNode> focusNodes = List<FocusNode>.generate(
+        atractionModel2!.length, (int index) => FocusNode());
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: SizedBox(
-        width: 500,
-        height: 250,
-        child: GridView.builder(
-            shrinkWrap: true,
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 125,
-                childAspectRatio: 0.9,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10),
-            itemCount: atractionModel.length,
-            itemBuilder: (BuildContext ctx, index) {
-              return TextButton(
-                onPressed: () {},
-                style: ButtonStyle(
-                  overlayColor: MaterialStateProperty.resolveWith<Color?>(
-                    (Set<MaterialState> states) {
-                      if (states.contains(MaterialState.focused) ||
-                          states.contains(MaterialState.pressed)) {
-                        return const Color(0XFF007BF9).withOpacity(0.8);
-                      }
-                      return null; // Defer to the widget's default.
-                    },
-                  ),
-                  elevation: MaterialStateProperty.resolveWith<double?>(
-                      (Set<MaterialState> states) {
-                    if (states.contains(MaterialState.pressed)) return 0;
-                    return null;
+      child: isSelect
+          ? const DetailFacilities()
+          : SizedBox(
+              width: 550,
+              height: 250,
+              child: GridView.builder(
+                  shrinkWrap: true,
+                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 100,
+                      childAspectRatio: 0.8,
+                      crossAxisSpacing: 15,
+                      mainAxisSpacing: 15),
+                  itemCount: atractionModel2!.length,
+                  itemBuilder: (BuildContext ctx, index) {
+                    return AtractionCard(
+                      focusNode: focusNodes[index],
+                      image: 'http://202.169.224.46/lm_launcher' +
+                          atractionModel2![index].nama!,
+                      title: atractionModel2![index].title!,
+                      listImage: atractionModel2![index].datas,
+                    );
                   }),
-                  backgroundColor: MaterialStateProperty.resolveWith<Color?>(
-                      (Set<MaterialState> states) {
-                    return Color(0XFF0C0D11);
-                  }),
-                  minimumSize: MaterialStateProperty.resolveWith<Size?>(
-                      (Set<MaterialState> states) {
-                    return Size.zero;
-                  }),
-                ),
-                child: Column(
-                  children: [
-                    Container(
-                      height: 70,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: NetworkImage(atractionModel[index].image!),
-                            fit: BoxFit.fill),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 8.0,
-                      ),
-                      child: Text(
-                        atractionModel[index].title!,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                            fontSize: 12.0, color: Colors.white),
-                      ),
-                    )
-                  ],
-                ),
-              );
-            }),
-      ),
+            ),
     );
   }
 }

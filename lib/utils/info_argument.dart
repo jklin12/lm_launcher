@@ -3,6 +3,9 @@
 // a customizable title and message.
 class InfoArguments {
   final String deviceId;
+  final String weatherTemp;
+  final String weatherStatus;
+  final int weatherIcon;
 
-  InfoArguments(this.deviceId);
+  InfoArguments(this.deviceId,this.weatherIcon,this.weatherStatus,this.weatherTemp);
 }

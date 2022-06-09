@@ -1,12 +1,9 @@
 import 'dart:async';
 
-import 'package:external_app_launcher/external_app_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-import 'package:lm_launcher/model/menu_model.dart';
-import 'package:lm_launcher/pages/info_pages.dart';
-import 'package:lm_launcher/utils/InfoArguments.dart';
+import 'package:lm_launcher/model/menu_model.dart'; 
 import 'package:platform_device_id/platform_device_id.dart';
 import 'package:device_apps/device_apps.dart';
 
@@ -217,9 +214,9 @@ class _HomePageState extends State<HomePage> {
                             if (event.isKeyPressed(LogicalKeyboardKey.select)) {
                               if (menuModel[menuIndex ?? 0].type != null &&
                                   menuModel[menuIndex ?? 0].type == 'inApp') {
-                                Navigator.pushNamed(
+                                /*Navigator.pushNamed(
                                     context, menuModel[menuIndex ?? 0].url!,
-                                    arguments: InfoArguments(_deviceId!));
+                                    arguments: InfoArguments(_deviceId!));*/
                               } else {
                                 if (menuModel[menuIndex ?? 0].url != null ||
                                     menuModel[menuIndex ?? 0].url != '') {

@@ -1,7 +1,7 @@
 import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lm_launcher/utils/InfoArguments.dart';
+import 'package:lm_launcher/utils/info_argument.dart';
 
 class InfoButton extends StatefulWidget {
   final FocusNode? focusNode;
@@ -48,11 +48,11 @@ class _InfoButtonState extends State<InfoButton> {
   KeyEventResult _handleKeyPress(FocusNode node, RawKeyEvent event) {
     if (event is RawKeyDownEvent) {
       widget.callBack;
-      print('Focus node ${node.debugLabel} got key event: ${event.logicalKey}');
+      print('  key event: ${event.logicalKey}');
       if (event.logicalKey == LogicalKeyboardKey.select) {
         widget.callBack?.call(widget.index!);
         return KeyEventResult.handled;
-      }
+      }  
     }
     return KeyEventResult.ignored;
   }
@@ -93,7 +93,9 @@ class _InfoButtonState extends State<InfoButton> {
         ),
         child: Row(
           children: [
-            Image.network(widget.image!, height: 30),
+            widget.image != null
+                ? Image.network(widget.image!, height: 30)
+                : Container(),
             const SizedBox(
               height: 3.0,
             ),

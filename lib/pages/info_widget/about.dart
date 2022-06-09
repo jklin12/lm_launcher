@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:lm_launcher/model/about_model.dart';
 
 class AboutUs extends StatelessWidget {
-  const AboutUs({Key? key}) : super(key: key);
+  final AboutModel? aboutModel;
+
+  const AboutUs({Key? key, this.aboutModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,20 +15,20 @@ class AboutUs extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: [
               Text(
-                "About Us",
-                style:
-                    TextStyle(fontSize: 18.0, fontFamily: 'Roboto Condensed'),
+                aboutModel!.title!,
+                style: const TextStyle(
+                    fontSize: 18.0, fontFamily: 'Roboto Condensed'),
               ),
               SizedBox(height: 10.0),
               SizedBox(
                 width: 350,
                 child: Text(
-                  "Aston Batam Hotel & Residence merupakan hotel baru di Batam dan hotel bintang empat yang terletak di pusat Batam, kota dimana bisnis dan hiburan menyatu dalam harmoni. Hotel ini terletak hanya 25 menit dari Bandara Hang Nadim dan hanya 8 menit dari Terminal Feri Harbour Bay, Pusat Perbelanjaan, Lapangan Golf menjadikannya salah satu pusat perdagangan paling strategis di Indonesia.",
+                  aboutModel!.body!,
                   textAlign: TextAlign.justify,
-                  style:
-                      TextStyle(fontSize: 15.0, fontFamily: 'Roboto Condensed'),
+                  style: const TextStyle(
+                      fontSize: 15.0, fontFamily: 'Roboto Condensed'),
                 ),
               ),
             ],
@@ -36,10 +39,10 @@ class AboutUs extends StatelessWidget {
           child: Container(
             width: 150.0,
             height: 200.0,
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
                 image: DecorationImage(
-              image: NetworkImage(
-                  "https://media-cdn.tripadvisor.com/media/photo-s/10/63/9f/78/getlstd-property-photo.jpg"),
+              image:
+                  NetworkImage('http://202.169.224.46/lm_launcher/' + aboutModel!.image!),
               fit: BoxFit.cover,
             )),
           ),

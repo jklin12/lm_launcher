@@ -38,9 +38,9 @@ class LoggingInterceptor extends Interceptor {
 
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) {
-    print("<-- Error -->");
-    print(err.error);
-    print(err.message);
+    //print("<-- Error -->");
+    //print(err.error);
+    //print(err.message);
     super.onError(err, handler);
   }
 }
