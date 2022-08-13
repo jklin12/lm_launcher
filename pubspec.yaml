@@ -40,8 +40,6 @@ dependencies:
   platform_device_id: ^1.0.1
   carousel_slider: ^4.1.1
   device_apps: ^2.2.0 
-  video_player: ^2.4.2
-  chewie: ^1.3.2
   weather: ^2.0.1
   dio: ^4.0.6
   get_storage: ^2.0.3
@@ -53,9 +51,37 @@ dependencies:
   flutter_cache_manager: ^3.3.0 
   radio_player: ^0.4.3
   flutter_alarm_clock: ^0.0.2
-  
-  
+  uuid: ^3.0.6
+  shared_preferences: ^2.0.13
+  get_it: ^7.2.0
+  event_bus: ^2.0.0
+
+  dart_chromecast:
+    git:
+      url: https://github.com/fastogt/dart_chromecast.git
+      ref: master
+  fastotv_dart:
+    git:
+      url: https://gitlab.com/fastogt/fastotv_dart.git
+      ref: master
+  fastotv_device_info:
+    git:
+      url: https://gitlab.com/fastogt/fastotv_device_info.git
+      ref: master
+  flutter_fastotv_common:
+    git:
+      url: https://gitlab.com/fastogt/flutter_fastotv_common.git
+      ref: master
+  player:
+    git:
+      url: https://gitlab.com/fastogt/flutter_fastotv_player.git
+      ref: main
+
 dev_dependencies:
+  dart_rules:
+    git:
+      url: https://github.com/fastogt/dart_rules.git
+      ref: main
   flutter_test:
     sdk: flutter
 

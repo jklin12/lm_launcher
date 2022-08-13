@@ -1,36 +1,31 @@
-import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
+import 'package:lm_launcher/base/add_stream/m3u_to_channel.dart';
+import 'package:lm_launcher/channel/live_stream.dart';
 
 class TvPages extends StatefulWidget {
   final String? url;
-  const TvPages({Key? key,this.url}) : super(key: key);
+  const TvPages({Key? key, this.url}) : super(key: key);
 
   @override
   State<TvPages> createState() => _TvPagesState();
 }
 
 class _TvPagesState extends State<TvPages> {
-  final videoPlayerController = VideoPlayerController.network(
-      'https://multiplatform-f.akamaihd.net/i/multi/will/bunny/big_buck_bunny_,640x360_400,640x360_700,640x360_1000,950x540_1500,.f4v.csmil/master.m3u8');
-  ChewieController? chewieController;
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    chewieController = ChewieController(
-      videoPlayerController: videoPlayerController,
-      aspectRatio: 3 / 2,
-      autoPlay: true,
-      looping: true,
-    );
+  }
+
+  void _onAdd() async { 
+      final AddStreamResponse? response = AddStreamResponse(type: StreamType.Live,channels: LiveStream(channel, epg));
+      if (response != null) {
+        addStreams(response);
+      } 
   }
 
   @override
   void dispose() {
-    videoPlayerController.dispose();
-    chewieController!.dispose();
     super.dispose();
   }
 
@@ -39,10 +34,7 @@ class _TvPagesState extends State<TvPages> {
     return MaterialApp(
         title: 'Video Demo',
         home: Scaffold(
-          body: Center(
-              child: Container(
-            child: Chewie(controller: chewieController!),
-          )),
+          body: Center(child: Container()),
         ));
   }
 }
